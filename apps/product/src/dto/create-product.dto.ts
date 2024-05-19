@@ -12,4 +12,7 @@ export class CreateProductDto {
   @IsDate()
   @Type(() => Date)
   createdDate: Date;
+
+  @IsString()
+  createdBy: string;
 }

@@ -4,8 +4,10 @@ import { ProductService } from './product.service';
 import { DatabaseModule, LoggerModule } from '@app/common';
 import { ProductRepository } from './product.repository';
 import { ProductDocument, ProductSchema } from './models/product.schema';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { AUTH_SERVICE } from '@app/common/constants/services';
 
 @Module({
   imports: [
@@ -21,9 +23,20 @@ import * as Joi from 'joi';
       isGlobal: true,
       validationSchema: Joi.object({
         MONGODB_URI: Joi.string().required(),
-        PORT: Joi.number().required(),
+        HTTP_PORT: Joi.number().required(),
       }),
     }),
+    ClientsModule.registerAsync([
+      {
+        name: AUTH_SERVICE,
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.TCP,
+          host: configService.get('AUTH_HOST'),
+          port: configService.get('AUTH_PORT'),
+        }),
+        inject: [ConfigService],
+      },
+    ]),
   ],
   controllers: [ProductController],
   providers: [ProductService, ProductRepository],
