@@ -23,7 +23,8 @@
       ],
       "@app/product/*": [
         "libs/product/src/*"
-      ],"@app/auth": [
+      ],
+      "@app/auth": [
         "libs/auth/src"
       ],
       "@app/auth/*": [
