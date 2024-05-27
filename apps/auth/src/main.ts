@@ -12,13 +12,13 @@ async function bootstrap() {
     transport: Transport.TCP,
     options: {
       host: '0.0.0.0',
-      port: configService.get('TCP_PORT'),
+      port: configService.get('AUTH_TCP_PORT'),
     },
   });
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.useLogger(app.get(Logger));
   await app.startAllMicroservices();
-  await app.listen(configService.get('HTTP_PORT'));
+  await app.listen(configService.get('AUTH_HTTP_PORT'));
 }
 bootstrap();

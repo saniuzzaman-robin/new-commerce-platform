@@ -20,7 +20,8 @@
     "test:e2e": "jest --config ./apps/new-commerce-platform/test/jest-e2e.json",
     "start:auth": "nest start auth --watch",
     "start:product": "nest start product --watch",
-    "start:all": "concurrently \"npm run start:auth\" \"npm run start:product\""
+    "start:auth-debug": "nest start auth --debug=0.0.0.0:9229 --watch",
+    "start:product-debug": "nest start product --debug=0.0.0.0:9230 --watch"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -62,7 +63,6 @@
     "@types/supertest": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
-    "concurrently": "^8.2.2",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",

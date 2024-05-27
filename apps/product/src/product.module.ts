@@ -23,7 +23,7 @@ import { AUTH_SERVICE } from '@app/common/constants/services';
       isGlobal: true,
       validationSchema: Joi.object({
         MONGODB_URI: Joi.string().required(),
-        HTTP_PORT: Joi.number().required(),
+        PRODUCT_HTTP_PORT: Joi.number().required(),
       }),
     }),
     ClientsModule.registerAsync([
@@ -31,8 +31,10 @@ import { AUTH_SERVICE } from '@app/common/constants/services';
         name: AUTH_SERVICE,
         useFactory: (configService: ConfigService) => ({
           transport: Transport.TCP,
-          host: configService.get('AUTH_HOST'),
-          port: configService.get('AUTH_PORT'),
+          options: {
+            host: configService.get('AUTH_TCP_HOST'),
+            port: configService.get('AUTH_TCP_PORT'),
+          },
         }),
         inject: [ConfigService],
       },
